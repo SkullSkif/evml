@@ -1,0 +1,1 @@
+mySimpleComputer: main.c sc_commandDecode.c sc_commandEncode.c sc_cpmmandValidate.c sc_variables.c; gcc -o mySimpleComputer main.c sc_commandDecode.c sc_commandEncode.c sc_commandValidate.c sc_variables.c
