@@ -22,7 +22,7 @@ printTerm (int addres, int input)
     }
   for (int count = 0; count <= 4; count++)
     {
-      mt_gotoXY (68, 17 + count);
+      mt_gotoXY (66, 20 + count);
       printf ("%03d> ", IN_OUT_addres[count]);
       if (IN_OUT_arr[count] >> 31 == 1)
         printf ("-");
