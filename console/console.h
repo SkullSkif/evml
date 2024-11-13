@@ -1,7 +1,9 @@
 #pragma once
 #include "../include/myBigChars.h"
+#include "../include/myReadKey.h"
 #include "../include/mySimpleComputer.h"
 #include "../include/myTerm.h"
+#include <locale.h>
 
 #define memoryCell = 6;
 #define FLAGS = 16;
@@ -37,3 +39,5 @@ void printBigCell (int cell, int x, int y);
 void printMemory ();
 
 int generateFont ();
+
+void printKeys ();

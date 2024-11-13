@@ -1,7 +1,8 @@
-APP_NAME = pr03
+APP_NAME = pr04
 LIB_SC = libsc
 LIB_MT = libmt
 LIB_BC = libbc
+LIB_RK = librk
 CNSL_NAME = cnsl.a
 CFLAGS = -Wall -I ../include
 CC = gcc
@@ -12,7 +13,7 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 APP_PATH = $(BIN_DIR)/$(APP_NAME)
-LIB_PATH = ../mySimpleComputer/bin/$(LIB_SC).a  ../myTerm/bin/$(LIB_MT).a ../myBigChars/bin/$(LIB_BC).a
+LIB_PATH = ../mySimpleComputer/bin/$(LIB_SC).a  ../myTerm/bin/$(LIB_MT).a ../myBigChars/bin/$(LIB_BC).a ../myReadKey/bin/$(LIB_RK).a
 CNSL_PATH = $(BIN_DIR)/$(CNSL_NAME)
 APP_SOURCES = $(wildcard $(SRC_DIR)/print*.$(SRC_EXT))
 CON_VAR = variables.c
@@ -24,7 +25,7 @@ DEPS = $(APP_OBJECTS:.o=.d)
 
 .PHONY: all clean
 
-all: $(BIN_DIR) $(OBJ_DIR) $(CNSL_PATH) $(CON_VAR_OBJ) $(LIB_PATH) $(APP_PATH)
+all: $(BIN_DIR) $(OBJ_DIR) $(CNSL_PATH) $(CON_VAR_OBJ) $(APP_PATH)
 
 -include $(DEPS)
 
