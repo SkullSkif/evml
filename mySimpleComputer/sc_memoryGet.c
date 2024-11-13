@@ -8,7 +8,7 @@ sc_MemoryGet (int address, int *value)
     }
   else
     {
-      *value = memory[address];
+      value = &memory[address];
       return 0;
     }
 }

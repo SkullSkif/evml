@@ -18,5 +18,6 @@ printCommand ()
   else
     printf ("-");
   printf ("%02d : %02d", *command, *operand);
+  bc_box (81, 4, 92, 6, 7, 0, "Команда", 1, 0);
   return;
 }

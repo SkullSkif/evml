@@ -4,7 +4,8 @@ printDecodedCommand (int value)
 {
   int Col, Row;
   mt_getscreensize (&Row, &Col);
-  mt_gotoXY (1, 15);
+  bc_box (1, 14, 60, 16, 7, 0, "Редактируемая Ячейка", 1, 0);
+  mt_gotoXY (2, 15);
   printf ("dec: %05d | oct: %05o | hex: %04X   bin: ", value, value, value);
   for (int q = 0; q <= 14; q++)
     {

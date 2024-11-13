@@ -1,6 +1,7 @@
 #pragma once
-#include <mySimpleComputer.h>
-#include <myTerm.h>
+#include "../include/myBigChars.h"
+#include "../include/mySimpleComputer.h"
+#include "../include/myTerm.h"
 
 #define memoryCell = 6;
 #define FLAGS = 16;
@@ -14,7 +15,8 @@
 #define memroyCellsY = 10;
 
 extern int IN_OUT_addres[4];
-extern int IN_OUT_arr[4];
+extern int IN_OUT_command[4];
+extern int font[18][2];
 
 void printCell (int address, enum Colors fg, enum Colors bg);
 
@@ -24,8 +26,14 @@ void printAccumulator ();
 
 void printCounters ();
 
+void printTerm (int value, int input);
+
 void printDecodedCommand (int value);
 
 void printCommand ();
 
-void printTerm (int addres, int input);
+void printBigCell (int cell, int x, int y);
+
+void printMemory ();
+
+int generateFont ();

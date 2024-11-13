@@ -3,7 +3,9 @@ int
 sc_regGet (int registr, int *value)
 {
   if (value == NULL || registr > 2 || registr < 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       int temp = flags;

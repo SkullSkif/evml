@@ -2,7 +2,7 @@
 int
 sc_MemorySet (int address, int value)
 {
-  if ((address < 0 || address > 127) || (value > 0x7F7F || value < 0))
+  if ((address < 0 || address > 127) || (value > 0x7FFF || value < 0))
     {
       return -1;
     }
