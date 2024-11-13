@@ -1,41 +1,34 @@
 #include "console.h"
+#include <locale.h>
+#include <signal.h>
+
 int
-main ()
+main (int argv, char *argc[])
 {
-  int rows, cols;
-  mt_getscreensize (&rows, &cols);
-  if (cols < 90 || rows < 26)
-    return -1;
-  generateFont ();
-  FILE *file = fopen ("font.bin", "rb");
-  int read_result;
-  bc_bigcharread (fileno (file), (int *)font, 18, &read_result);
-  setlocale (LC_ALL, ".UTF-8");
-  fclose (file);
+  if (consoleInitial (argv, argc))
+    return 1;
+  mt_clrscrn ();
+
+  // Инициализация памяти, регистров и аккумулятора
   sc_MemoryInit ();
-  mt_clrscrn ();
-  printMemory ();
-  printAccumulator ();
-  printCounters ();
-  printFlags ();
-  printDecodedCommand (memory[0]);
-  printCommand ();
-  printBigCell (memory[1], 67, 9);
-  printKeys ();
-  for (int t = 0; t < 7; t++)
+  sc_regInit ();
+  sc_accumulatorInit ();
+  sc_icounterInit ();
+
+  sc_regInit ();
+
+  signal (SIGALRM, IRC);
+  signal (SIGUSR1, IRC);
+
+  rk_mytermsave ();
+  enum keys key;
+  while (key != KEY_ESC)
     {
-      int new_adr = rand () % 10;
-      printTerm (new_adr, 1);
+      drawConsole ();
+      rk_readkey (&key);
+      handleKeypress (&key);
+      alarm (1);
+      sleep (0.01);
     }
-  mt_clrscrn ();
-  printMemory ();
-  printAccumulator ();
-  printCounters ();
-  printFlags ();
-  printDecodedCommand (memory[0]);
-  printCommand ();
-  printTerm (0, 0);
-  printBigCell (memory[1], 67, 9);
-  printKeys ();
   return 0;
 }

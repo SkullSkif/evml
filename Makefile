@@ -1,8 +1,8 @@
 all:
-	$(MAKE) -C mySimpleComputer
+	$(MAKE) -C myReadKey
 	$(MAKE) -C myTerm
 	$(MAKE) -C myBigChars
-	$(MAKE) -C myReadKey
+	$(MAKE) -C mySimpleComputer
 	$(MAKE) -C console
 clean:
 	$(MAKE) clean -C console

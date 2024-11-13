@@ -12,5 +12,5 @@ printKeys ()
   printf ("F5 - Accumulator\n");
   mt_gotoXY (85, 24);
   printf ("F6 - Instruction counter\n");
-  bc_box (84, 19, 114, 25, 7, 0, "Клавиши", 1, 0);
+  bc_box (79, 19, 114, 25, 7, 0, "Клавиши", 2, 0);
 }

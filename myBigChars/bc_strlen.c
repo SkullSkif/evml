@@ -2,11 +2,14 @@
 int
 bc_strlen (char *str)
 {
-  int length = 0;
-  for (; *str++ != '\0'; length++, str++)
+  int len = 0;
+  while (*str != '\0')
     {
-      if ((*str & 0xc0) == 0x80 || str == NULL)
-        return -1;
+      if ((*str & 0xC0) != 0x80)
+        {
+          len++;
+        }
+      str++;
     }
-  return length;
+  return len;
 }

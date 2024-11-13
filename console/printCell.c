@@ -2,12 +2,12 @@
 void
 printCell (int address, enum Colors fg, enum Colors bg)
 {
-  int x = 1 + 6 * (address % 10);
+  int x = 2 + 6 * (address % 10);
   int *sign = malloc (sizeof (int));
   int *command = malloc (sizeof (int));
   int *operand = malloc (sizeof (int));
   sc_commandDecode (memory[address], sign, command, operand);
-  mt_gotoXY (x, 1 + address / 10);
+  mt_gotoXY (x, 2 + address / 10);
   mt_setfgcolor (fg);
   mt_setbgcolor (bg);
   if (*sign == 0)

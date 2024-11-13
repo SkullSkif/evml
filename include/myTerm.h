@@ -10,7 +10,8 @@ enum Colors
   BLUE,
   MAGNETA,
   CYAN,
-  GRAY
+  GRAY,
+  WHITE
 };
 
 int mt_clrscrn ();

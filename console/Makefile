@@ -13,9 +13,9 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 APP_PATH = $(BIN_DIR)/$(APP_NAME)
-LIB_PATH = ../mySimpleComputer/bin/$(LIB_SC).a  ../myTerm/bin/$(LIB_MT).a ../myBigChars/bin/$(LIB_BC).a ../myReadKey/bin/$(LIB_RK).a
+LIB_PATH = ../mySimpleComputer/bin/$(LIB_SC).a ../myReadKey/bin/$(LIB_RK).a  ../myTerm/bin/$(LIB_MT).a ../myBigChars/bin/$(LIB_BC).a
 CNSL_PATH = $(BIN_DIR)/$(CNSL_NAME)
-APP_SOURCES = $(wildcard $(SRC_DIR)/print*.$(SRC_EXT))
+APP_SOURCES = $(wildcard $(SRC_DIR)/*.$(SRC_EXT))
 CON_VAR = variables.c
 CON_VAR_OBJ = $(OBJ_DIR)/variables.o
 FONT_VAR = font.c

@@ -10,6 +10,5 @@ printBigCell (int cell, int x, int y)
     }
   mt_gotoXY (x, y + 8);
   printf ("Номер редактируемой ячейки: %03d", ICount);
-  bc_box (61, 7, 114, 18, 7, 0, "Редактируемая ячейка (увеличенно)", 1, 0);
   mt_setdefaultcolor ();
 }

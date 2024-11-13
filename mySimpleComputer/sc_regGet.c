@@ -2,16 +2,14 @@
 int
 sc_regGet (int registr, int *value)
 {
-  if (value == NULL || registr > 2 || registr < 0)
+  if (value == NULL || registr != IT_MASK || registr != ZD_MASK
+      || registr != MC_MASK || registr != OO_MASK || registr != SF_MASK)
     {
       return -1;
     }
   else
     {
-      int temp = flags;
-      temp = temp << (15 - registr);
-      temp = temp >> (15 + registr);
-      *value = temp;
+      *value = (flags & registr) ? 1 : 0;
       return 0;
     }
 }
