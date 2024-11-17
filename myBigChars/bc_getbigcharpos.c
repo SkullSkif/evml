@@ -1,15 +1,14 @@
 #include <myBigChars.h>
+#include <myTerm.h>
+
 int
 bc_getbigcharpos (int *big, int x, int y, int *value)
 {
-  int pos;
-  if ((x < 0) || (y < 0) || (x > 7) || (y > 7))
+  if ((x < 0) || (x > 7) || (y < 0) || (y > 7))
     return -1;
-  if (y <= 3)
-    pos = 0;
+  if (big[y / 4] & (1 << (8 * (y % 4) + (7 - x))))
+    *value = 1;
   else
-    pos = 1;
-  y = y % 4;
-  *value = (big[pos] >> (y * 8 + x)) & 1;
+    *value = 0;
   return 0;
 }

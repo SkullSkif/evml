@@ -1,55 +1,34 @@
-APP_NAME = pr04
-LIB_SC = libsc
-LIB_MT = libmt
-LIB_BC = libbc
-LIB_RK = librk
-CNSL_NAME = cnsl.a
-CFLAGS = -Wall -I ../include
 CC = gcc
-SRC_EXT = c
+CFLAGS =  -Wall -Werror -Wextra -std=c11 -I../myReadKey -I../mySimpleComputer
+SRCDIR = .
+OBJ_DIR = ../console/obj
+LIBDIR = ../console/obj
 
-SRC_DIR = .
-OBJ_DIR = obj
-BIN_DIR = bin
+#SRCS := $(wildcard $(SRCDIR)/*.c)
+SRCS := $(filter-out $(SRCDIR)/main.c, $(wildcard $(SRCDIR)/*.c))
+OBJS := $(patsubst $(SRCDIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
-APP_PATH = $(BIN_DIR)/$(APP_NAME)
-LIB_PATH = ../mySimpleComputer/bin/$(LIB_SC).a ../myReadKey/bin/$(LIB_RK).a  ../myTerm/bin/$(LIB_MT).a ../myBigChars/bin/$(LIB_BC).a
-CNSL_PATH = $(BIN_DIR)/$(CNSL_NAME)
-APP_SOURCES = $(wildcard $(SRC_DIR)/*.$(SRC_EXT))
-CON_VAR = variables.c
-CON_VAR_OBJ = $(OBJ_DIR)/variables.o
-FONT_VAR = font.c
-FONT_OBJ = $(OBJ_DIR)/font.o
-APP_OBJECTS = $(APP_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/%.o)
-DEPS = $(APP_OBJECTS:.o=.d)
+OBJSLINK := $(wildcard $(OBJ_DIR)/*.o)
+
+LIB_FILE = $(LIBDIR)/libConsole.a
 
 .PHONY: all clean
 
-all: $(BIN_DIR) $(OBJ_DIR) $(CNSL_PATH) $(CON_VAR_OBJ) $(APP_PATH)
+build: $(LIB_FILE) console.out
 
--include $(DEPS)
+console.out:
+	gcc -c main.c -o ../console/main.o -I../include -I../mySimpleComputer -I../myBigChars -I../myTerm -I../myReadKey -I../console
+	gcc main.o $(OBJSLINK) -o console.out -L../console/obj -lMySimpleComputer -lMyTerm -lMyBigChars -lMyReadKey -lConsole
 
-$(BIN_DIR):
-	mkdir -p $@
-
-$(OBJ_DIR):
-	mkdir -p $@
-
-$(CON_VAR_OBJ) : $(CON_VAR)
-	$(CC) -MMD -c $(CFLAGS) $^ -o $@
-
-$(APP_PATH): $(LIB_PATH) $(CNSL_PATH)
-	$(CC) $(CFLAGS) -g test.c $(CNSL_PATH) $(LIB_PATH) -o $@ 
-
-$(FONT_OBJ) : $(FONT_VAR)
-	$(CC) -MMD -c $(CFLAGS) $^ -o $@
-
-$(CNSL_PATH) : $(APP_OBJECTS) $(CON_VAR_OBJ) $(FONT_OBJ)
+$(LIB_FILE): $(OBJS)
 	ar rcs $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
-	$(CC) -MMD -c $(CFLAGS) $^ -o $@
+$(OBJ_DIR)/%.o: $(SRCDIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I../include -c -o $@ $<
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(LIB_FILE) *.bin *.o *.out
 

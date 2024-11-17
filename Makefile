@@ -1,12 +1,18 @@
-all:
-	$(MAKE) -C myReadKey
-	$(MAKE) -C myTerm
-	$(MAKE) -C myBigChars
-	$(MAKE) -C mySimpleComputer
-	$(MAKE) -C console
+build:
+	$(MAKE) -C ./mySimpleComputer
+	$(MAKE) -C ./myTerm
+	$(MAKE) -C ./myBigChars
+	$(MAKE) -C ./myReadKey
+	$(MAKE) -C ./console
+
+run: build
+	./console/console.out
+
 clean:
-	$(MAKE) clean -C console
-	$(MAKE) clean -C mySimpleComputer
-	$(MAKE) clean -C myTerm
-	$(MAKE) clean -C myBigChars
-	$(MAKE) clean -C myReadKey
+	$(MAKE) -C ./mySimpleComputer clean
+	$(MAKE) -C ./myTerm clean
+	$(MAKE) -C ./myBigChars clean
+	$(MAKE) -C ./myReadKey clean
+	$(MAKE) -C ./console clean
+format:
+	find . -type f -name '*.[ch]' | xargs clang-format --style=GNU -i --verbose

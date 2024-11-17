@@ -1,17 +1,9 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
+
 int
-sc_regInit ()
+sc_regInit (void)
 {
-  for (int i = 0; i <= 2; i++)
-    {
-      if (i == 2)
-        {
-          flags = ~flags & OFF;
-        }
-      else
-        {
-          flags = flags & (~OFF);
-        }
-    }
+  flagRegister = 0;
   return 0;
 }

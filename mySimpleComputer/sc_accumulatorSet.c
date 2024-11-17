@@ -1,12 +1,14 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
+
 int
 sc_accumulatorSet (int value)
 {
-  if (value > 128 || value < -128)
-    return -1;
-  else
+  if (value < -32768 || value > 32767)
     {
-      Accum = value;
-      return 0;
+      return -1;
     }
+
+  accumulator = value;
+  return 0;
 }

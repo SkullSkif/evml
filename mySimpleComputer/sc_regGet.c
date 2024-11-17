@@ -1,15 +1,17 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
+
 int
-sc_regGet (int registr, int *value)
+sc_regGet (int regist, int *value)
 {
-  if (value == NULL || registr != IT_MASK || registr != ZD_MASK
-      || registr != MC_MASK || registr != OO_MASK || registr != SF_MASK)
+  if (regist > 0 && regist < 6)
     {
-      return -1;
+      *value = (flagRegister >> (regist - 1)) & 0x1;
+      return 0;
     }
   else
     {
-      *value = (flags & registr) ? 1 : 0;
-      return 0;
+      sc_regSet (INCORRECT_COMMAND_RECEIVED, 4);
+      return -1;
     }
 }

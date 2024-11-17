@@ -1,36 +1,26 @@
-
-APP_NAME = libmt.a
-CFLAGS = -I../include -Wall -Wextra -Werror
 CC = gcc
-SRC_EXT = c
+CFLAGS = -Wall -Werror -Wextra -std=c11 -I../myReadKey
+SRCDIR = .
+OBJ_DIR = ../console/obj
+LIBDIR = ../console/obj
 
-SRC_DIR = .
-OBJ_DIR = obj
-BIN_DIR = bin
+SRCS := $(wildcard $(SRCDIR)/*.c)
+OBJS := $(patsubst $(SRCDIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
-APP_PATH = $(BIN_DIR)/$(APP_NAME)
-APP_SOURCES = $(wildcard $(SRC_DIR)/*.$(SRC_EXT))
-APP_OBJECTS = $(APP_SOURCES:%.$(SRC_EXT)=$(OBJ_DIR)/%.o)
-DEPS = $(APP_OBJECTS:.o=.d)
+LIB_FILE = $(LIBDIR)/libMyTerm.a
 
 .PHONY: all clean
 
-all: $(BIN_DIR) $(OBJ_DIR) $(APP_PATH)
+all: $(LIB_FILE)
 
--include $(DEPS)
-
-$(BIN_DIR):
-	mkdir -p $@
-
-$(OBJ_DIR):
-	mkdir -p $@
-
-$(APP_PATH): $(APP_OBJECTS)
+$(LIB_FILE): $(OBJS)
 	ar rcs $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
-	$(CC) -MMD -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+$(OBJ_DIR)/%.o: $(SRCDIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I../include -c -o $@ $<
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
-
+	rm -rf $(OBJ_DIR) $(LIB_FILE) *.bin

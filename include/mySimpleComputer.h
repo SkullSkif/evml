@@ -1,76 +1,62 @@
 #pragma once
+#include <assert.h>
+#include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-#define ON 0xFFFE
-#define OFF 0x0001
-#define IT_MASK 0x001
-#define MC_MASK 0x1000
-#define SF_MASK 0x010
-#define ZD_MASK 0x10000
-#define OO_MASK 0x100
+#define OUT_OF_MEMORY_BOUNDS 1
+#define OVERFLOW_OPERATION 2
+#define IGNORING_TACT_PULSES 3
+#define INCORRECT_COMMAND_RECEIVED 4
+#define DIVISION_ERR_BY_ZERO 5
 
-#define READ 0x10
-#define WRITE 0x11
+#define CACHE_SIZE 5
+#define CACHE_LINE_SIZE 10
 
-//Операции загрузки/выгрузки в аккумулятор
-#define LOAD 0x20
-#define STORE 0x21
+typedef struct
+{
+  int address;
+  int data[CACHE_LINE_SIZE];
+  int lastAccessTime;
+} CacheLine;
 
-//Арифметические операции
-#define ADD 0x30
-#define SUB 0x31
-#define DIVIDE 0x32
-#define MUL 0x33
-
-//Операции передачи управления
-#define JUMP 0x40
-#define JNEG 0x41
-#define JZ 0x42
-#define HALT 0x43
-
-extern int memory[128];
-extern int flags;
-extern int Accum;
-extern int ICount;
-extern int TACTS;
-
-int sc_MemoryInit (void);
-
-int sc_MemorySet (int address, int value);
-
-int sc_MemoryGet (int address, int *value);
-
-int sc_MemorySave (char *filename);
-
-int sc_MemoryLoad (char *filename);
+int sc_memoryInit (void);
+int sc_memorySet (int address, int value);
+int sc_memoryGet (int address, int *value);
+int sc_memorySave (char *filename);
+int sc_memoryLoad (char *filename);
 
 int sc_regInit (void);
+int sc_regSet (int regist, int value);
+int sc_regGet (int regist, int *value);
 
-int sc_regSet (int reg, int value);
-
-int sc_regGet (int reg, int *value);
-
-int sc_accumulatorInit (void);
-
-int sc_accumulatorSet (int value);
-
-int sc_accumulatorGet (int *value);
-
-int sc_icounterInit (void);
-
-int sc_icounterSet (int value);
-
-int sc_icounterGet (int *value);
-
-int sc_commandEncode (int sign, int command, int operand, int *value);
-
-int sc_commandDecode (int value, int *sign, int *command, int *operand);
-
+int sc_commandEncode (int command, int operand, int *value);
+int sc_commandDecode (int value, int *command, int *operand);
 int sc_commandValidate (int command);
 
-void IRC (int signum);
+int sc_accumulatorInit (void);
+int sc_accumulatorGet (int *value);
+int sc_accumulatorSet (int value);
 
-int ALU (int command, int operand);
+int sc_icounterInit (void);
+int sc_icounterSet (int value);
+int sc_icounterGet (int *value);
 
-void CU ();
+void printCell (void);
+void printFlags (void);
+void printDecodedCommand (int value);
+void printAccumulator (void);
+void printCounters (void);
+
+void sc_initCache ();
+void sc_updateCacheAfterSave (int memaddress, int cacheLine, int *value);
+int sc_findLeastRecentlyUsedCacheEntry ();
+
+bool initStatics (bool flag);

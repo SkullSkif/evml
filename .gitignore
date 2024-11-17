@@ -1,0 +1,8 @@
+.vscode
+out
+build
+*.a
+*.o
+terminal_command
+main
+*.bin

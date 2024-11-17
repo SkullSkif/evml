@@ -1,7 +1,9 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
+
 int
-sc_accumulatorInit ()
+sc_accumulatorInit (void)
 {
-  Accum = 0;
+  accumulator = 0;
   return 0;
 }

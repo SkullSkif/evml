@@ -1,7 +1,9 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
 
-int memory[128] = { 0 };
-int flags = 0;
-int Accum = 0;
-int ICount = 0;
-int TACTS = 0;
+int *memory;
+int accumulator;
+int count;
+int flagRegister;
+CacheLine *cache;
+bool updateStatic;

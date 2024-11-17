@@ -1,4 +1,5 @@
 #include <myTerm.h>
+
 int
 mt_getscreensize (int *rows, int *cols)
 {
@@ -8,4 +9,4 @@ mt_getscreensize (int *rows, int *cols)
   *rows = ws.ws_row;
   *cols = ws.ws_col;
   return 0;
-};
+}

@@ -1,12 +1,14 @@
 #include <mySimpleComputer.h>
+#include <sc.h>
+
 int
 sc_icounterSet (int value)
 {
-  if (value > 127 || value < 0)
-    return -1;
-  else
+  if (value < 0 || value > 128)
     {
-      ICount = value;
-      return 0;
+      return -1;
     }
+
+  count = value;
+  return 0;
 }
